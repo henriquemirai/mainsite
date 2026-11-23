@@ -1,0 +1,70 @@
+---
+interface Props {
+  href: string;
+  class?: string;
+  ariaLabel?: string;
+}
+
+const {
+  href,
+  class: className = '',
+  ariaLabel,
+} = Astro.props;
+
+const isExternal = /^https?:\/\//i.test(href);
+
+const classes = ['text-link', className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<a
+  class={classes}
+  href={href}
+  aria-label={ariaLabel}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+>
+  <slot />
+  {isExternal && (
+    <span class="text-link__icon" aria-hidden="true">↗</span>
+  )}
+</a>
+
+<style>
+  .text-link {
+    color: var(--color-text-primary);
+    font: inherit;
+
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+
+    transition: color 180ms ease;
+  }
+
+  .text-link:hover {
+    color: var(--color-text-hover);
+  }
+
+  .text-link:focus-visible {
+    outline: 2px solid var(--color-light-ochre);
+    outline-offset: 3px;
+  }
+
+  .text-link__icon {
+    display: inline-block;
+    margin-left: 0.25em;
+    font-size: 0.9em;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .text-link {
+      transition: none;
+    }
+  }
+</style>

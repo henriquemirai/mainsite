@@ -1,0 +1,102 @@
+---
+interface Props {
+  label: string;
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  class?: string;
+}
+
+const {
+  label,
+  href,
+  type = 'button',
+  disabled = false,
+  class: className = '',
+} = Astro.props;
+
+const classes = ['button', className].filter(Boolean).join(' ');
+const isExternal = href
+  ? /^https?:\/\//i.test(href)
+  : false;
+---
+
+{
+  href !== undefined && !disabled ? (
+    <a
+      class={classes}
+      href={href}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
+    >
+      {label}
+      {isExternal && (
+        <span class="button__icon" aria-hidden="true">↗</span>
+      )}
+    </a>
+  ) : href !== undefined ? (
+    <span class={classes} aria-disabled="true">
+      {label}
+    </span>
+  ) : (
+    <button class={classes} type={type} disabled={disabled}>
+      {label}
+    </button>
+  )
+}
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    padding: 0.875rem 1.5rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+
+    background-color: var(--color-button-primary-bg);
+    color: var(--color-button-primary-text);
+
+    font-family: var(--font-body);
+    font-size: var(--type-size-body);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .button:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--color-cream);
+    color: var(--color-brown);
+  }
+
+  .button:focus-visible {
+    outline: 2px solid var(--color-light-ochre);
+    outline-offset: 3px;
+  }
+
+  .button:disabled,
+  .button[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .button {
+      transition: none;
+    }
+  }
+  
+  .button__icon {
+    display: inline-block;
+    font-size: 1.125em;
+    line-height: 1;
+  }
+</style>

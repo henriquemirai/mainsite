@@ -1,10 +1,45 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import TextLink from '../components/TextLink.astro';
 ---
 
 <BaseLayout lang="en" title="Henrique Mirai">
   <main>
     <h1>English version</h1>
     <p>Shared layout working.</p>
+    <div class="button-test">
+  		<Button label="Ver projetos" href="/projetos/" />
+  		<Button label="Executar ação" type="button" />
+	</div>
+	<div class="text-link-test">
+		<p>
+		Conheça meus <TextLink href="/projetos/">projetos</TextLink>.
+		</p>
+
+		<p>
+		Visite meu <TextLink href="https://github.com/">
+		GitHub
+		</TextLink>.
+		</p>
+	</div>
   </main>
 </BaseLayout>
+
+<style>
+  .button-test {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-block: 2rem;
+  }
+  .text-link-test {
+    grid-column: 1 / -1;
+    padding-block: 2rem;
+  }
+
+  .text-link-test p + p {
+    margin-top: 1rem;
+  }
+</style>

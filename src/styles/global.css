@@ -1,8 +1,13 @@
 /**
  * Global Styles
  */
+
+/* ==============
+   DESIGN TOKENS
+   ============== */
+
 :root {
-  /* Primitive colors */
+  /* Colors: palette */
   --color-olive: #50594B;
   --color-ochre: #B89A58;
   --color-brown: #5A3426;
@@ -10,47 +15,108 @@
   --color-charcoal: #262720;
   --color-light-ochre: #E2C88E;
 
-  /* Font weights */
+  /* Colors: semantic */
+  --color-background-primary: var(--color-olive);
+  --color-text-primary: var(--color-cream);
+  --color-text-secondary: rgb(242 237 228 / 85%);
+  --color-text-hover: var(--color-light-ochre);
+
+  /* Colors: brand */
+  --color-brand-bg: var(--color-brown);
+  --color-brand-fg: var(--color-ochre);
+
+  /* Colors: buttons */
+  --color-button-primary-bg: var(--color-brown);
+  --color-button-primary-text: var(--color-cream);
+
+  /* Colors: decorative */
+  --color-border-decorative: var(--color-ochre);
+
+  /* Background: texture */
+  --bg-texture-image: url('/images/bg_texture.webp');
+
+  /* Typography: families */
+  --font-display: "Familjen Grotesk", sans-serif;
+  --font-body: "Commissioner", sans-serif;
+  --font-mono: "Recursive", monospace;
+
+  /* Typography: weights */
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --font-weight-black: 900;
 
-  /* Semantic colors */
-  --color-background-primary: var(--color-olive);
-  --color-text-primary: var(--color-cream);
-  --color-text-secondary: rgb(242 237 228 / 85%);
-  --color-text-hover: var(--color-light-ochre);
+  /* Typography: fluid sizes (360px–1200px) */
+  --type-size-page-title: clamp(
+    2.5rem,
+    calc(1.643rem + 3.81vw),
+    4.5rem
+  );
 
-  /* Font families */
-  --font-display: "Familjen Grotesk", sans-serif;
-  --font-body: "Commissioner", sans-serif;
-  --font-mono: "Recursive", monospace;
+  --type-size-page-intro: clamp(
+    1.375rem,
+    calc(1.214rem + 0.714vw),
+    1.75rem
+  );
 
-  /* Brand */
-  --color-brand-bg: var(--color-brown);
-  --color-brand-fg: var(--color-ochre);
+  --type-size-body: clamp(
+    1rem,
+    calc(0.946rem + 0.238vw),
+    1.125rem
+  );
 
-  /* Buttons */
-  --color-button-primary-bg: var(--color-brown);
-  --color-button-primary-text: var(--color-cream);
+  --type-size-eyebrow: clamp(
+    0.875rem,
+    calc(0.768rem + 0.476vw),
+    1.125rem
+  );
 
-  /* Decorative elements */
-  --color-border-decorative: var(--color-ochre);
+  /* Typography: fixed sizes */
+  --type-size-auxiliary: 0.875rem;
+  --type-size-metadata: 0.875rem;
 
-  /* About page callout */
-  --color-callout-background: var(--color-ochre);
-  --color-callout-text: var(--color-charcoal);
+  /* Typography: line heights (provisional) */
+  --type-leading-page-title: 1.05;
+  --type-leading-page-intro: 1.35;
+  --type-leading-body: 1.60;
+  --type-leading-eyebrow: 1.40;
+  --type-leading-auxiliary: 1.40;
+  --type-leading-metadata: 1.50;
 
-  /* Project thumbnails */
-  --color-project-thumbnail-label-bg: var(--color-ochre);
-  --color-project-thumbnail-label-text: var(--color-charcoal);
-  --color-project-thumbnail-label-hover-bg: var(--color-cream);
+  /* Layout: grid */
+  --layout-container-max-width: 90rem;
+  --layout-grid-columns: 6;
+  --layout-margin-inline: 1rem;
+  --layout-grid-gutter: 2rem;
+
+  /* Layout: border radius */
+  --radius: 1.125rem;
 }
 
+/* Breakpoints */
 
-/* Reset */
+/* Mobile */
+@media (max-width: 47.999rem) {
+  :root {
+    --layout-grid-columns: 3;
+    --layout-margin-inline: 0.5rem;
+    --layout-grid-gutter: 1rem;
+  }
+}
+
+/* Tablet: provisional */
+@media (min-width: 48rem) and (max-width: 74.999rem) {
+  :root {
+    --layout-grid-columns: 4;
+    --layout-margin-inline: 0.75rem;
+    --layout-grid-gutter: 1.5rem;
+  }
+}
+
+/* ======
+   RESET
+   ====== */
 *,
 *::before,
 *::after {
@@ -62,10 +128,23 @@
   padding: 0;
 }
 
-/* Foundations */
+/* ============
+   FOUNDATIONS
+   ============ */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
-  min-height: 100vh;
   background-color: var(--color-background-primary);
+  background-image: var(--bg-texture-image);
+  background-repeat: repeat;
   color: var(--color-text-primary);
   font-family: var(--font-body);
   font-weight: var(--font-weight-regular);
