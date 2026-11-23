@@ -2,7 +2,7 @@
 import '../styles/global.css';
 
 interface Props {
-  lang: string;
+  lang: 'en' | 'pt-BR';
   title: string;
 }
 
@@ -27,9 +27,9 @@ import SiteFooter from '../components/SiteFooter.astro';
   </head>
   <body id="top">
     <div class="site-grid">
-      <SiteHeader lang={lang as 'en' | 'pt-BR'} />
+      <SiteHeader lang={lang} />
       <slot />
-      <SiteFooter lang={lang as 'en' | 'pt-BR'} />
+      <SiteFooter lang={lang} />
     </div>
   </body>
 </html>

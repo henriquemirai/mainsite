@@ -63,7 +63,13 @@ const homeHref = isEnglish ? '/' : '/br/';
     aria-label={isEnglish ? 'Main navigation' : 'Navegação principal'}
   >
     {navigation.map((item) => (
-      <a href={item.href}>{item.label}</a>
+      <a
+        href={item.href}
+        target={item.external ? '_blank' : undefined}
+        rel={item.external ? 'noopener noreferrer' : undefined}
+      >
+        {item.label}
+      </a>
     ))}
   </nav>
 
@@ -105,7 +111,13 @@ const homeHref = isEnglish ? '/' : '/br/';
       aria-label={isEnglish ? 'Mobile navigation' : 'Navegação mobile'}
     >
       {navigation.map((item) => (
-        <a href={item.href}>{item.label}</a>
+        <a
+          href={item.href}
+          target={item.external ? '_blank' : undefined}
+          rel={item.external ? 'noopener noreferrer' : undefined}
+        >
+          {item.label}
+        </a>
       ))}
 
       <div class="site-header__mobile-languages">
@@ -339,8 +351,8 @@ const homeHref = isEnglish ? '/' : '/br/';
     .site-header__mobile-panel {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
-      padding-block: 1.5rem 1rem;
+      gap: 0.75rem;
+      padding-block: 4rem 1.5rem;
     }
 
     .site-header__mobile[open] .site-header__mobile-panel {
@@ -351,7 +363,7 @@ const homeHref = isEnglish ? '/' : '/br/';
     .site-header__mobile-panel > a {
       display: flex;
       align-items: center;
-      min-height: 3rem;
+      min-height: 3.5rem;
       font-size: 1.125rem;
     }
 
@@ -361,10 +373,6 @@ const homeHref = isEnglish ? '/' : '/br/';
       display: flex;
       align-items: center;
       gap: 0.5rem;
-
-      margin-top: 1rem;
-      padding-top: 1rem;
-
       border-top: 1px solid var(--color-border-decorative);
     }
 
