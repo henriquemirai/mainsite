@@ -1,0 +1,39 @@
+---
+import AboutLayout from '../../layouts/AboutLayout.astro';
+---
+
+<AboutLayout
+  lang="pt-BR"
+  title="Sobre"
+  description="Sou Henrique Mirai, Design Engineer atuando na interseção entre design, tecnologia e marketing."
+
+  links={[
+    { label: 'Link 1', href: '#top' },
+    { label: 'Link 2', href: '#top' },
+    { label: 'Link 3', href: '#top' },
+    { label: 'Link 4', href: '#top' },
+  ]}
+
+  biography={[
+    'Meu trabalho combina design visual, desenvolvimento web e marketing digital, com foco na criação de experiências web eficazes, acessíveis e de fácil manutenção.',
+
+    'Ao longo da minha carreira, trabalhei com diferentes tecnologias, plataformas e equipes, explorando como design e engenharia podem atuar juntos para resolver problemas de negócios.',
+
+    'Tenho interesse no papel da inteligência artificial nos processos criativos e técnicos por trás das experiências digitais.',
+
+    'Além da tecnologia, valorizo o aprendizado contínuo, a experimentação e a capacidade de abordar problemas sob diferentes perspectivas.',
+  ]}
+
+  image="https://placehold.co/800x1000"
+  imageAlt="Retrato de Henrique Mirai"
+  imageWidth={800}
+  imageHeight={1000}
+
+  callout={{
+    text: 'Além do meu trabalho profissional, exploro fotografia, artes visuais, artes marciais e outros interesses criativos.',
+    link: {
+      label: 'Conheça meu lado B',
+      href: '#top',
+    },
+  }}
+/>

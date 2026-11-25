@@ -1,0 +1,172 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+import { getPublishedProjects } from '../lib/projects';
+
+interface Props {
+  lang: 'en' | 'pt-BR';
+  title: string;
+  description: string;
+  ctaLabel: string;
+}
+
+const {
+  lang,
+  title,
+  description,
+  ctaLabel,
+} = Astro.props;
+
+const languageLinks = {
+  en: '/works/',
+  ptBR: '/br/projetos/',
+};
+
+const projects = await getPublishedProjects(lang);
+
+const featuredProjects = projects.filter(
+  (project) => project.entry.data.featured
+);
+
+const defaultProjects = projects.filter(
+  (project) => !project.entry.data.featured
+);
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  languageLinks={languageLinks}
+>
+  <main class="projects">
+
+    <PageIntro
+      title={title}
+      description={description}
+    />
+
+    {featuredProjects.length > 0 && (
+      <div class="projects__featured">
+
+        {featuredProjects.map((project) => (
+          <div class="projects__featured-item">
+
+            <ProjectCard
+              title={project.entry.data.title}
+              description={project.entry.data.description}
+              context={project.entry.data.context}
+              image={project.entry.data.image.src}
+              imageAlt={project.entry.data.imageAlt}
+              href={project.href}
+              ctaLabel={ctaLabel}
+              variant="featured"
+            />
+
+          </div>
+        ))}
+
+      </div>
+    )}
+
+    {defaultProjects.length > 0 && (
+      <div class="projects__default">
+
+        {defaultProjects.map((project) => (
+          <ProjectCard
+            title={project.entry.data.title}
+            description={project.entry.data.description}
+            context={project.entry.data.context}
+            image={project.entry.data.image.src}
+            imageAlt={project.entry.data.imageAlt}
+            href={project.href}
+            ctaLabel={ctaLabel}
+            variant="default"
+          />
+        ))}
+
+      </div>
+    )}
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* Page structure */
+
+  .projects {
+    padding-block: 3rem;
+    align-items: start;
+  }
+
+  /* Shared listing grid */
+
+  .projects__featured,
+  .projects__featured-item,
+  .projects__default {
+    grid-column: 1 / -1;
+
+    display: grid;
+    grid-template-columns: subgrid;
+
+    align-items: start;
+    min-width: 0;
+  }
+
+  /* Featured projects */
+
+  .projects__featured {
+    margin-top: 3rem;
+    row-gap: 2rem;
+  }
+
+  .projects__featured-item {
+    border-top: 1px solid var(--color-border-decorative);
+    padding-top: 2rem;
+  }
+
+  /* Default projects */
+
+  .projects__default {
+    margin-top: 2rem;
+    padding-top: 2rem;
+
+    border-top: 1px solid var(--color-border-decorative);
+
+    row-gap: 3rem;
+  }
+
+  /* Default projects without featured projects */
+
+  .projects__default:first-of-type {
+    margin-top: 3rem;
+  }
+
+  /* Mobile */
+
+  @media (max-width: 47.999rem) {
+    .projects {
+      padding-block: 2rem;
+    }
+
+    .projects__featured {
+      margin-top: 2rem;
+      row-gap: 1.5rem;
+    }
+
+    .projects__featured-item {
+      padding-top: 1.5rem;
+    }
+
+    .projects__default {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      row-gap: 2rem;
+    }
+
+    .projects__default:first-of-type {
+      margin-top: 2rem;
+    }
+  }
+</style>

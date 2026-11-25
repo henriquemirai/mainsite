@@ -1,0 +1,39 @@
+---
+import AboutLayout from '../layouts/AboutLayout.astro';
+---
+
+<AboutLayout
+  lang="en"
+  title="About"
+  description="I'm Henrique Mirai, a Design Engineer working at the intersection of design, technology and marketing."
+
+  links={[
+    { label: 'Link 1', href: '#top' },
+    { label: 'Link 2', href: '#top' },
+    { label: 'Link 3', href: '#top' },
+    { label: 'Link 4', href: '#top' },
+  ]}
+
+  biography={[
+    'My work combines visual design, web development and digital marketing, with a focus on creating effective, accessible and maintainable web experiences.',
+
+    'Throughout my career, I have worked with different technologies, platforms and teams, exploring how design and engineering can work together to solve business problems.',
+
+    'I am interested in the role of artificial intelligence in the creative and technical processes behind digital experiences.',
+
+    'Beyond technology, I value continuous learning, experimentation and the ability to approach problems from different perspectives.',
+  ]}
+
+  image="https://placehold.co/800x1000"
+  imageAlt="Portrait of Henrique Mirai"
+  imageWidth={800}
+  imageHeight={1000}
+
+  callout={{
+    text: 'Beyond my professional work, I explore photography, visual arts, martial arts and other creative interests.',
+    link: {
+      label: 'Discover my B-side',
+      href: '#top',
+    },
+  }}
+/>

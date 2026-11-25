@@ -40,6 +40,28 @@ const navigation: NavigationItem[] = [
 ];
 
 const homeHref = isEnglish ? '/' : '/br/';
+
+const normalizePath = (path: string) =>
+  path.replace(/\/+$/, '') || '/';
+
+const currentPath = normalizePath(Astro.url.pathname);
+
+function getAriaCurrent(
+  href: string
+): 'page' | 'location' | undefined {
+  const normalizedHref = normalizePath(href);
+
+  if (currentPath === normalizedHref) {
+    return 'page';
+  }
+
+  if (currentPath.startsWith(`${normalizedHref}/`)) {
+    return 'location';
+  }
+
+  return undefined;
+}
+
 ---
 
 <header class="site-header">
@@ -67,6 +89,7 @@ const homeHref = isEnglish ? '/' : '/br/';
         href={item.href}
         target={item.external ? '_blank' : undefined}
         rel={item.external ? 'noopener noreferrer' : undefined}
+        aria-current={getAriaCurrent(item.href)}
       >
         {item.label}
       </a>
@@ -115,6 +138,7 @@ const homeHref = isEnglish ? '/' : '/br/';
           href={item.href}
           target={item.external ? '_blank' : undefined}
           rel={item.external ? 'noopener noreferrer' : undefined}
+          aria-current={getAriaCurrent(item.href)}
         >
           {item.label}
         </a>
@@ -188,7 +212,9 @@ const homeHref = isEnglish ? '/' : '/br/';
     outline-offset: 3px;
   }
 
-  .site-header a[aria-current="true"] {
+  .site-header a[aria-current="true"],
+  .site-header a[aria-current="page"],
+  .site-header a[aria-current="location"] {
     font-weight: var(--font-weight-bold);
   }
 

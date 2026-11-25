@@ -4,9 +4,13 @@ import '../styles/global.css';
 interface Props {
   lang: 'en' | 'pt-BR';
   title: string;
+  languageLinks?: {
+    en: string;
+    ptBR: string;
+  };
 }
 
-const { lang, title } = Astro.props;
+const { lang, title, languageLinks } = Astro.props;
 
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -27,7 +31,7 @@ import SiteFooter from '../components/SiteFooter.astro';
   </head>
   <body id="top">
     <div class="site-grid">
-      <SiteHeader lang={lang} />
+      <SiteHeader lang={lang} languageLinks={languageLinks} />
       <slot />
       <SiteFooter lang={lang} />
     </div>

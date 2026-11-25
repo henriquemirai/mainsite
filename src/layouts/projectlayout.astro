@@ -1,0 +1,113 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ProjectHeader from '../components/ProjectHeader.astro';
+import EditorialContent from '../components/EditorialContent.astro';
+
+import {
+  render,
+  type CollectionEntry,
+} from 'astro:content';
+
+interface Props {
+  lang: 'en' | 'pt-BR';
+  slug: string;
+  entry: CollectionEntry<'projects'>;
+}
+
+const {
+  lang,
+  slug,
+  entry,
+} = Astro.props;
+
+const { Content } = await render(entry);
+
+const languageLinks = {
+  en: `/works/${slug}/`,
+  ptBR: `/br/projetos/${slug}/`,
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title={entry.data.title}
+  languageLinks={languageLinks}
+>
+  <main class="project">
+
+    <ProjectHeader
+      title={entry.data.title}
+      metadata={entry.data.metadata}
+    />
+
+    <div class="project__body">
+      <EditorialContent>
+        <Content />
+      </EditorialContent>
+    </div>
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* Page structure */
+
+  .project {
+    padding-block: 3rem;
+    align-items: start;
+    row-gap: 4rem;
+  }
+
+  /* Editorial grid */
+
+  .project__body {
+    grid-column: 1 / -1;
+
+    display: grid;
+    grid-template-columns: subgrid;
+
+    min-width: 0;
+  }
+
+  .project__body > :global(.editorial-content) {
+    grid-column: 1 / -1;
+
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: start;
+  }
+
+  /* Standard editorial blocks */
+
+  .project__body :global(.editorial-content > *) {
+    grid-column: 1 / 5;
+    min-width: 0;
+  }
+
+  /* Wide editorial media */
+
+  .project__body :global(.editorial-content > img),
+  .project__body :global(.editorial-content > figure),
+  .project__body :global(.editorial-content > picture),
+  .project__body :global(.editorial-content > p:has(> img:only-child)),
+  .project__body :global(.editorial-content > p:has(> picture:only-child)) {
+    grid-column: 1 / -1;
+  }
+
+  /* Tablet and mobile */
+
+  @media (max-width: 74.999rem) {
+    .project__body :global(.editorial-content > *) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Mobile */
+
+  @media (max-width: 47.999rem) {
+    .project {
+      padding-block: 2rem;
+      row-gap: 3rem;
+    }
+  }
+</style>
