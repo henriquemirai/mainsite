@@ -1,0 +1,120 @@
+---
+interface Props {
+  category: string;
+  title: string;
+  description: string;
+  href: string;
+}
+
+const {
+  category,
+  title,
+  description,
+  href,
+} = Astro.props;
+---
+
+<a class="article-preview" href={href}>
+  <p class="article-preview__category">
+    {category}
+  </p>
+
+  <h2 class="article-preview__title">
+    {title}
+  </h2>
+
+  <p class="article-preview__description">
+    {description}
+  </p>
+</a>
+
+<style>
+  /* Base */
+
+  .article-preview {
+    grid-column: span 3;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    min-width: 0;
+
+    color: var(--color-text-primary);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Category */
+
+  .article-preview__category {
+    font-family: var(--font-mono);
+    font-size: var(--type-size-metadata);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--type-leading-metadata);
+  }
+
+  /* Title */
+
+  .article-preview__title {
+    font-family: var(--font-display);
+    font-size: clamp(
+      1.5rem,
+      calc(1.179rem + 1.429vw),
+      2.25rem
+    );
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.15;
+
+    overflow-wrap: anywhere;
+
+    transition: color 180ms ease;
+  }
+
+  /* Description */
+
+  .article-preview__description {
+    font-family: var(--font-body);
+    font-size: var(--type-size-body);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.40;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* Interaction */
+
+  .article-preview:hover .article-preview__title {
+    color: var(--color-text-hover);
+  }
+
+  .article-preview:focus-visible {
+    outline: 2px solid var(--color-cream);
+    outline-offset: 3px;
+  }
+
+  /* Tablet */
+
+  @media (min-width: 48rem) and (max-width: 74.999rem) {
+    .article-preview {
+      grid-column: span 2;
+    }
+  }
+
+  /* Mobile */
+
+  @media (max-width: 47.999rem) {
+    .article-preview {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Reduced motion */
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-preview__title {
+      transition: none;
+    }
+  }
+</style>

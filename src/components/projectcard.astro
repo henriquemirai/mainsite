@@ -1,0 +1,194 @@
+---
+import Button from './Button.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  context: string;
+  image: string;
+  imageAlt: string;
+  href: string;
+  ctaLabel: string;
+  variant?: 'default' | 'featured';
+}
+
+const {
+  title,
+  description,
+  context,
+  image,
+  imageAlt,
+  href,
+  ctaLabel,
+  variant = 'default',
+} = Astro.props;
+---
+
+<a
+  class:list={[
+    'project-card',
+    `project-card--${variant}`,
+  ]}
+  href={href}
+>
+  <img
+    class="project-card__image"
+    src={image}
+    alt={imageAlt}
+    width="688"
+    height="373"
+    loading="lazy"
+    decoding="async"
+  />
+
+  <div class="project-card__content">
+    <p class="project-card__context">
+      {context}
+    </p>
+
+    <h2 class="project-card__title">
+      {title}
+    </h2>
+
+    <p class="project-card__description">
+      {description}
+    </p>
+
+    <div class="project-card__cta">
+      <Button
+        label={ctaLabel}
+        presentational
+      />
+    </div>
+  </div>
+</a>
+
+<style>
+  /* Base */
+
+  .project-card {
+    grid-column: span 3;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 1.5rem;
+
+    min-width: 0;
+
+    color: var(--color-text-primary);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Image */
+
+  .project-card__image {
+    display: block;
+
+    width: 100%;
+    max-width: 688px;
+    height: auto;
+    aspect-ratio: 688 / 373;
+
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  /* Content */
+
+  .project-card__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+
+    min-width: 0;
+  }
+
+  .project-card__context {
+    font-family: var(--font-mono);
+    font-size: var(--type-size-metadata);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--type-leading-metadata);
+  }
+
+  .project-card__title {
+    font-family: var(--font-display);
+    font-size: clamp(
+      2rem,
+      calc(1.464rem + 2.381vw),
+      3.25rem
+    );
+    font-weight: var(--font-weight-bold);
+    line-height: 1.10;
+    overflow-wrap: anywhere;
+  }
+
+  .project-card__description {
+    font-family: var(--font-body);
+    font-size: var(--type-size-body);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.40;
+  }
+
+  .project-card__cta {
+    display: flex;
+    margin-top: 0.5rem;
+  }
+
+  /* Featured variant */
+
+  .project-card--featured {
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: center;
+    column-gap: var(--layout-grid-gutter);
+  }
+
+  .project-card--featured .project-card__image,
+  .project-card--featured .project-card__content {
+    grid-column: span 3;
+  }
+
+  /* Interaction */
+
+  .project-card:hover,
+  .project-card:focus-visible {
+    --button-bg: var(--color-cream);
+    --button-text: var(--color-brown);
+  }
+
+  .project-card:focus-visible {
+    outline: 2px solid var(--color-cream);
+    outline-offset: 3px;
+    border-radius: var(--radius);
+  }
+
+  /* Tablet */
+
+  @media (min-width: 48rem) and (max-width: 74.999rem) {
+    .project-card--default {
+      grid-column: span 2;
+    }
+
+    .project-card--featured .project-card__image,
+    .project-card--featured .project-card__content {
+      grid-column: span 2;
+    }
+  }
+
+  /* Mobile */
+
+  @media (max-width: 47.999rem) {
+    .project-card--default,
+    .project-card--featured {
+      grid-column: 1 / -1;
+    }
+
+    .project-card--featured .project-card__image,
+    .project-card--featured .project-card__content {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

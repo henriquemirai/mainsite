@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<section class="page-intro">
+  <h1 class="page-intro__title">{title}</h1>
+  <p class="page-intro__description">{description}</p>
+</section>
+
+<style>
+  .page-intro {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: start;
+    row-gap: 1rem;
+  }
+
+  .page-intro__title {
+    grid-column: span 3;
+    font-family: var(--font-display);
+    font-size: var(--type-size-page-title);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--type-leading-page-title);
+    color: var(--color-text-primary);
+  }
+
+  .page-intro__description {
+    grid-column: span 3;
+    font-family: var(--font-display);
+    font-size: var(--type-size-page-intro);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--type-leading-page-intro);
+    color: var(--color-text-primary);
+  }
+
+  /* Tablet */
+  @media (min-width: 48rem) and (max-width: 74.999rem) {
+    .page-intro__title,
+    .page-intro__description {
+      grid-column: span 2;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 47.999rem) {
+    .page-intro__title,
+    .page-intro__description {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

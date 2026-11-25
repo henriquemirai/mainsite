@@ -4,6 +4,7 @@ interface Props {
   href?: string;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
+  presentational?: boolean;
   class?: string;
 }
 
@@ -12,17 +13,27 @@ const {
   href,
   type = 'button',
   disabled = false,
+  presentational = false,
   class: className = '',
 } = Astro.props;
 
-const classes = ['button', className].filter(Boolean).join(' ');
+const classes = [
+  'button',
+  presentational && 'button--presentational',
+  className,
+].filter(Boolean).join(' ');
+
 const isExternal = href
   ? /^https?:\/\//i.test(href)
   : false;
 ---
 
 {
-  href !== undefined && !disabled ? (
+  presentational ? (
+    <span class={classes}>
+      {label}
+    </span>
+  ) : href !== undefined && !disabled ? (
     <a
       class={classes}
       href={href}
@@ -56,8 +67,15 @@ const isExternal = href
     border: 1px solid transparent;
     border-radius: var(--radius);
 
-    background-color: var(--color-button-primary-bg);
-    color: var(--color-button-primary-text);
+    background-color: var(
+      --button-bg,
+      var(--color-button-primary-bg)
+    );
+
+    color: var(
+      --button-text,
+      var(--color-button-primary-text)
+    );
 
     font-family: var(--font-body);
     font-size: var(--type-size-body);
@@ -72,7 +90,7 @@ const isExternal = href
       color 180ms ease;
   }
 
-  .button:hover:not(:disabled):not([aria-disabled="true"]) {
+  .button:hover:not(:disabled):not([aria-disabled="true"]):not(.button--presentational) {
     background-color: var(--color-cream);
     color: var(--color-brown);
   }
@@ -88,12 +106,16 @@ const isExternal = href
     cursor: not-allowed;
   }
 
+  .button--presentational {
+    cursor: inherit;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .button {
       transition: none;
     }
   }
-  
+
   .button__icon {
     display: inline-block;
     font-size: 1.125em;
