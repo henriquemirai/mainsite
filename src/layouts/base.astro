@@ -12,8 +12,8 @@ interface Props {
 
 const { lang, title, languageLinks } = Astro.props;
 
-import SiteHeader from '../components/SiteHeader.astro';
-import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/site-header.astro';
+import SiteFooter from '../components/site-footer.astro';
 ---
 
 <!doctype html>
@@ -24,7 +24,7 @@ import SiteFooter from '../components/SiteFooter.astro';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600;700&family=Familjen+Grotesk:wght@400;500;600;700;900&family=Recursive:MONO@1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600;700;900&family=Familjen+Grotesk:wght@400;500;600;700;900&family=Recursive:MONO@1&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>

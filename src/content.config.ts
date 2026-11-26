@@ -31,6 +31,29 @@ const projects = defineCollection({
   }),
 });
 
+const articles = defineCollection({
+  loader: glob({
+    base: './src/content/articles',
+    pattern: '*/{en,pt-br}.{md,mdx}',
+    generateId: ({ entry }) =>
+      entry.replace(/\\/g, '/').replace(/\.mdx?$/, ''),
+  }),
+  schema: z.object({
+    title: z.string().trim().min(1),
+    description: z.string().trim().min(1),
+
+    slug: z.string().regex(
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      'Invalid article slug'
+    ),
+
+    publishedAt: z.coerce.date(),
+
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   projects,
+  articles,
 };

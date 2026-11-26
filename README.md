@@ -56,6 +56,12 @@ npm run preview
 - `src/styles/`: Global styles and design tokens
 - `public/`: Static assets
 
+## Documentation
+
+- [Naming conventions](docs/naming-conventions.md)
+- [Technical documentation](docs/technical-documentation.md)
+- [Design System](docs/design-system.md)
+
 ## Deployment
 
 Deployment is planned for HostGator using GitHub Actions.

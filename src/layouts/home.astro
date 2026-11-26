@@ -1,0 +1,364 @@
+---
+import BaseLayout from './base.astro';
+import Button from '../components/button.astro';
+import ProjectGallery from '../components/project-gallery.astro';
+import { getHomeProjects } from '../lib/projects';
+
+interface Props {
+  lang: 'en' | 'pt-BR';
+  eyebrow: string;
+  statement: string;
+  secondaryText: string;
+  ctaLabel: string;
+  galleryLabel: string;
+}
+
+const {
+  lang,
+  eyebrow,
+  statement,
+  secondaryText,
+  ctaLabel,
+  galleryLabel,
+} = Astro.props;
+
+const projects = await getHomeProjects(lang);
+
+const projectsHref =
+  lang === 'en' ? '/works/' : '/br/projetos/';
+---
+
+<BaseLayout lang={lang} title="Henrique Mirai">
+  <main class="home">
+
+    <section
+      class="home-hero"
+      aria-labelledby="hero-title"
+    >
+      <div class="home-hero__portrait">
+        <img
+          src="/images/foto.jpg"
+          alt=""
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+
+      <div class="home-hero__intro">
+        <p class="home-hero__eyebrow">
+          {eyebrow}
+        </p>
+
+        <h1
+          class="home-hero__name"
+          id="hero-title"
+        >
+          <span>Henrique</span>{' '}<span>Mirai</span>
+        </h1>
+
+        <p class="home-hero__statement">
+          {statement}
+        </p>
+      </div>
+
+      <div class="home-hero__details">
+        <p class="home-hero__secondary">
+          {secondaryText}
+        </p>
+
+        <Button
+          label={ctaLabel}
+          href={projectsHref}
+        />
+      </div>
+    </section>
+
+    {projects.length > 0 && (
+      <div class="home__projects">
+        <ProjectGallery
+          projects={projects}
+          label={galleryLabel}
+        />
+      </div>
+    )}
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* HOME */
+
+  .home {
+    padding-block: 3rem 5rem;
+    row-gap: 2rem;
+  }
+
+  /* HERO */
+
+  .home-hero {
+    grid-column: 1 / -1;
+
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: auto auto;
+    column-gap: var(--layout-grid-gutter);
+    row-gap: 1.5rem;
+
+    position: relative;
+    isolation: isolate;
+
+    --type-size-hero: clamp(
+      3.5rem,
+      calc(1.294rem + 9.804vw),
+      6rem
+    );
+
+    --type-size-hero-statement: clamp(
+      1.5rem,
+      calc(1.179rem + 1.429vw),
+      2.25rem
+    );
+
+    --type-leading-hero: 1;
+    --type-leading-hero-statement: 1.25;
+  }
+
+  /* PORTRAIT */
+
+  .home-hero__portrait {
+    grid-column: 1 / -1;
+    grid-row: 1;
+
+    position: relative;
+    justify-self: end;
+
+    width: 46%;
+    min-height: 15rem;
+
+    overflow: hidden;
+    border-radius: var(--radius);
+    background-color: var(--color-charcoal);
+  }
+
+  .home-hero__portrait img {
+    position: absolute;
+    inset: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .home-hero__portrait::after {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+      90deg,
+      rgb(0 0 0 / 30%),
+      transparent 85%
+    );
+
+    pointer-events: none;
+  }
+
+  /* INTRODUCTION */
+
+  .home-hero__intro {
+    grid-column: 1 / -1;
+    grid-row: 1;
+
+    display: grid;
+    grid-template-columns: subgrid;
+    row-gap: 1rem;
+    align-content: start;
+
+    position: relative;
+    z-index: 1;
+
+    padding-block: 1rem;
+  }
+
+  .home-hero__eyebrow {
+    grid-column: 1 / -1;
+
+    margin: 0;
+
+    font-family: var(--font-mono);
+    font-size: var(--type-size-eyebrow);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--type-leading-eyebrow);
+
+    color: var(--color-text-primary);
+  }
+
+  .home-hero__name {
+    grid-column: 1 / -1;
+
+    margin: 0;
+
+    font-family: var(--font-display);
+    font-size: var(--type-size-hero);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--type-leading-hero);
+
+    color: var(--color-text-primary);
+  }
+
+  .home-hero__name span {
+    display: block;
+  }
+
+  .home-hero__statement {
+    grid-column: 1 / -1;
+
+    width: 51%;
+    margin: 0;
+
+    font-family: var(--font-body);
+    font-size: var(--type-size-hero-statement);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--type-leading-hero-statement);
+
+    color: var(--color-text-primary);
+    overflow-wrap: break-word;
+  }
+
+  /* SECONDARY TEXT AND CTA */
+
+  .home-hero__details {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+
+    position: relative;
+    z-index: 1;
+  }
+
+  .home-hero__secondary {
+    margin: 0;
+
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: var(--font-weight-regular);
+    line-height: var(--type-leading-body);
+
+    color: var(--color-text-secondary);
+  }
+
+  /* PROJECT GALLERY */
+
+  .home__projects {
+    grid-column: 1 / -1;
+
+    display: grid;
+    grid-template-columns: subgrid;
+
+    position: relative;
+    z-index: 2;
+  }
+
+  /* TABLET */
+
+  @media (min-width: 768px) {
+    .home {
+      padding-block: 4rem 7rem;
+      row-gap: 3rem;
+    }
+
+    .home-hero {
+      grid-template-rows: auto 1fr;
+      row-gap: 1.5rem;
+      --type-size-hero: clamp(
+        6rem,
+        calc(27.778vw - 7.333rem),
+        13.5rem
+      );
+
+      --type-leading-hero: 0.95;
+    }
+
+    .home-hero__portrait {
+      grid-column: 3 / -1;
+      grid-row: 1 / 3;
+
+      width: 100%;
+      min-height: 0;
+      aspect-ratio: 4 / 5;
+
+      align-self: start;
+    }
+
+    .home-hero__intro {
+      padding-block: 2rem 0;
+    }
+
+    .home-hero__name {
+      font-size: min(var(--type-size-hero), 15vw);
+    }
+
+    .home-hero__name span {
+      display: inline-block;
+    }
+
+    .home-hero__statement {
+      grid-column: 1 / span 2;
+      width: auto;
+    }
+
+    .home-hero__details {
+      grid-column: 1 / span 2;
+      align-self: start;
+    }
+  }
+
+  /* DESKTOP */
+
+  @media (min-width: 1200px) {
+    .home {
+      padding-block: 5rem 10rem;
+      row-gap: 0;
+    }
+
+    .home-hero__portrait {
+      grid-column: 4 / -1;
+    }
+
+    .home-hero__intro {
+      padding-block-start: clamp(
+        6rem,
+        10vw,
+        9rem
+      );
+
+      row-gap: 1.5rem;
+    }
+
+    .home-hero__name {
+      white-space: nowrap;
+    }
+
+    .home-hero__statement {
+      grid-column: 1 / span 3;
+    }
+
+    .home-hero__details {
+      grid-column: 1 / span 3;
+      padding-block-end: 10rem;
+    }
+
+    .home__projects {
+      margin-block-start: -9rem;
+    }
+  }
+</style>

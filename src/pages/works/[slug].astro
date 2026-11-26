@@ -1,5 +1,5 @@
 ---
-import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import ProjectDetailLayout from '../../layouts/project-detail.astro';
 import { getPublishedProjects } from '../../lib/projects';
 import type { CollectionEntry } from 'astro:content';
 
@@ -24,7 +24,7 @@ const { entry } = Astro.props;
 const { slug } = Astro.params;
 ---
 
-<ProjectLayout
+<ProjectDetailLayout
   lang="en"
   slug={slug!}
   entry={entry}

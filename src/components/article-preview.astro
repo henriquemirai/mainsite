@@ -1,13 +1,11 @@
 ---
 interface Props {
-  category: string;
   title: string;
   description: string;
   href: string;
 }
 
 const {
-  category,
   title,
   description,
   href,
@@ -15,13 +13,9 @@ const {
 ---
 
 <a class="article-preview" href={href}>
-  <p class="article-preview__category">
-    {category}
-  </p>
-
-  <h2 class="article-preview__title">
+  <h3 class="article-preview__title">
     {title}
-  </h2>
+  </h3>
 
   <p class="article-preview__description">
     {description}
@@ -44,15 +38,6 @@ const {
     color: var(--color-text-primary);
     text-decoration: none;
     cursor: pointer;
-  }
-
-  /* Category */
-
-  .article-preview__category {
-    font-family: var(--font-mono);
-    font-size: var(--type-size-metadata);
-    font-weight: var(--font-weight-regular);
-    line-height: var(--type-leading-metadata);
   }
 
   /* Title */

@@ -1,4 +1,3 @@
-
 import {
   getCollection,
   type CollectionEntry,
@@ -81,7 +80,7 @@ export async function getHomeProjects(
 
   const projects = await getPublishedProjects(lang);
 
-  return projects.filter(
-    (project) => project.entry.data.showOnHome
-  );
+  return projects
+    .filter((project) => project.entry.data.showOnHome)
+    .slice(0, 3);
 }

@@ -1,0 +1,147 @@
+---
+import BaseLayout from './base.astro';
+import PageIntro from '../components/page-intro.astro';
+import ArticlePreview from '../components/article-preview.astro';
+
+import { getArticlesByYear } from '../lib/articles';
+
+interface Props {
+  lang: 'en' | 'pt-BR';
+  title: string;
+  description: string;
+}
+
+const {
+  lang,
+  title,
+  description,
+} = Astro.props;
+
+const languageLinks = {
+  en: '/articles/',
+  ptBR: '/br/artigos/',
+};
+
+const articleGroups = await getArticlesByYear(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  languageLinks={languageLinks}
+>
+  <main class="articles">
+
+    <PageIntro
+      title={title}
+      description={description}
+    />
+
+    {articleGroups.length > 0 && (
+      <div class="articles__listing">
+
+        {articleGroups.map(({ year, articles }) => (
+          <section
+            class="articles__year"
+            aria-labelledby={`year-${year}`}
+          >
+
+            <h2
+              class="articles__year-title"
+              id={`year-${year}`}
+            >
+              {year}
+            </h2>
+
+            <div class="articles__grid">
+
+              {articles.map((article) => (
+                <ArticlePreview
+                  title={article.entry.data.title}
+                  description={article.entry.data.description}
+                  href={article.href}
+                />
+              ))}
+
+            </div>
+
+          </section>
+        ))}
+
+      </div>
+    )}
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* Page structure */
+
+  .articles {
+    padding-block: 3rem;
+    align-items: start;
+  }
+
+  /* Shared listing grid */
+
+  .articles__listing,
+  .articles__year,
+  .articles__grid {
+    grid-column: 1 / -1;
+
+    display: grid;
+    grid-template-columns: subgrid;
+
+    align-items: start;
+    min-width: 0;
+  }
+
+  /* Article listing */
+
+  .articles__listing {
+    margin-top: 3rem;
+    row-gap: 3rem;
+  }
+
+  /* Year group */
+
+  .articles__year {
+    row-gap: 1.5rem;
+  }
+
+  .articles__year-title {
+    grid-column: 1 / -1;
+
+    font-family: var(--font-body);
+    font-size: clamp(
+      2.25rem,
+      calc(1.964rem + 1.429vw),
+      3.25rem
+    );
+    font-weight: var(--font-weight-black);
+    line-height: 1.1;
+  }
+
+  /* Article grid */
+
+  .articles__grid {
+    row-gap: 3rem;
+  }
+
+  /* Mobile */
+
+  @media (max-width: 47.999rem) {
+    .articles {
+      padding-block: 2rem;
+    }
+
+    .articles__listing {
+      margin-top: 2rem;
+      row-gap: 2rem;
+    }
+
+    .articles__grid {
+      row-gap: 2rem;
+    }
+  }
+</style>

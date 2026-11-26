@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/base.astro';
+import ProjectGallery from '../components/project-gallery.astro';
+import { getHomeProjects } from '../lib/projects';
+
+const projects = await getHomeProjects('en');
+---
+
+<BaseLayout lang="en" title="Home Gallery Test">
+  <main>
+    <ProjectGallery
+      projects={projects}
+      label="Selected projects"
+    />
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    padding-block: 3rem;
+  }
+</style>

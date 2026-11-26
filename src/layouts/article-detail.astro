@@ -1,0 +1,146 @@
+---
+import BaseLayout from './base.astro';
+import EditorialContent from '../components/editorial-content.astro';
+
+import { render } from 'astro:content';
+
+import {
+  getArticleLanguageLinks,
+  type Article,
+} from '../lib/articles';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+
+const { lang, entry } = article;
+const { title, publishedAt } = entry.data;
+
+const { Content } = await render(entry);
+
+const languageLinks =
+  await getArticleLanguageLinks(article);
+
+const formattedDate = new Intl.DateTimeFormat(
+  lang === 'en' ? 'en-US' : 'pt-BR',
+  {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  }
+).format(publishedAt);
+
+const isoDate = publishedAt.toISOString().slice(0, 10);
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  languageLinks={languageLinks}
+>
+  <main class="article">
+
+    <div class="article__container">
+
+      <header class="article__header">
+
+        <h1 class="article__title">
+          {title}
+        </h1>
+
+        <time
+          class="article__date"
+          datetime={isoDate}
+        >
+          {formattedDate}
+        </time>
+
+      </header>
+
+      <EditorialContent>
+        <Content />
+      </EditorialContent>
+
+    </div>
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* Page structure */
+
+  .article {
+    padding-block: 3rem;
+    align-items: start;
+  }
+
+  /* Editorial container */
+
+  .article__container {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    max-width: 56.25rem;
+    margin-inline: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+
+    min-width: 0;
+  }
+
+  /* Article header */
+
+  .article__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    text-align: center;
+  }
+
+  /* Title */
+
+  .article__title {
+    font-family: var(--font-body);
+    font-size: clamp(
+      2.25rem,
+      calc(1.875rem + 1.875vw),
+      3.25rem
+    );
+    font-weight: var(--font-weight-black);
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* Publication date */
+
+  .article__date {
+    font-family: var(--font-mono);
+    font-size: var(--type-size-metadata);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--type-leading-metadata);
+  }
+
+  /* Mobile */
+
+  @media (max-width: 47.999rem) {
+    .article {
+      padding-block: 2rem;
+    }
+
+    .article__container {
+      gap: 3rem;
+    }
+
+    .article__header {
+      gap: 1rem;
+    }
+  }
+</style>
