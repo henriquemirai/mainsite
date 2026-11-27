@@ -119,15 +119,17 @@ A árvore representa a estrutura discutida, sem expandir todos os subdiretórios
 
 ## 6. Aplicação da convenção ao código existente
 
+Checklist atualizado em 27/11/2026 com base na execução registrada na seção 8 da documentação técnica (comparação de builds, preview das 18 rotas e conferência dos 35 imports) e na estrutura e build confirmados no diagnóstico inicial. As marcações se referem à refatoração de nomenclatura, sem nova aprovação visual ou conclusão dos requisitos futuros da Fase 2.
+
 A refatoração deve ser exclusivamente organizacional, sem mudanças de design, comportamento, arquitetura ou URLs públicas.
 
-- [ ] Inspecionar a estrutura real do repositório antes de executar as renomeações.
-- [ ] Renomear componentes e layouts conforme as tabelas aprovadas.
-- [ ] Atualizar imports, identificadores relacionados e demais referências aos arquivos renomeados.
-- [ ] Verificar a capitalização exata dos caminhos, considerando o desenvolvimento em Windows e a implantação em ambiente potencialmente sensível a maiúsculas e minúsculas.
-- [ ] Preservar rotas, slugs, conteúdo, estilos e funcionalidades existentes.
-- [ ] Atualizar a documentação técnica e o Design System para refletir a nomenclatura aprovada.
-- [ ] Executar as verificações e o build disponíveis no projeto.
-- [ ] Relatar alterações realizadas, resultados das verificações e eventuais impedimentos ou divergências encontrados.
+- [x] Inspecionar a estrutura real do repositório antes de executar as renomeações.
+- [x] Renomear componentes e layouts conforme as tabelas aprovadas.
+- [x] Atualizar imports, identificadores relacionados e demais referências aos arquivos renomeados.
+- [x] Verificar a capitalização exata dos caminhos, considerando o desenvolvimento em Windows e a implantação em ambiente potencialmente sensível a maiúsculas e minúsculas.
+- [x] Preservar rotas, slugs, conteúdo, estilos e funcionalidades existentes.
+- [x] Atualizar a documentação técnica e o Design System para refletir a nomenclatura aprovada.
+- [x] Executar as verificações e o build disponíveis no projeto.
+- [x] Relatar alterações realizadas, resultados das verificações e eventuais impedimentos ou divergências encontrados.
 
 Caso a estrutura real apresente arquivos ou responsabilidades não contemplados neste documento, sinalizar as divergências antes de realizar alterações semânticas ou arquiteturais não aprovadas.

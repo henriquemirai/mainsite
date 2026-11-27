@@ -1,12 +1,12 @@
 # Documentação técnica | Henrique Mirai
 
 **Projeto:** Site pessoal e portfólio profissional  
-**Data:** 26/11/2026  
+**Data:** 27/11/2026 (baseline da Fase 2)
 **Marco:** Sobre, listagens e páginas individuais de projetos e artigos implementadas e validadas; Home implementada em sua primeira versão, com galeria validada e correções tipográficas aplicadas. Refinamento visual e validação integrada final ficam para o segundo momento.
 
 ## 1. Escopo e fontes
 
-Registro técnico complementar ao Design System atualizado em 25/11/2026 e às instruções do projeto. Consolida as decisões posteriores discutidas durante a implementação. O Design System permanece como referência visual, observadas as decisões mais recentes registradas aqui. Não substitui o código-fonte.
+Registro técnico complementar ao Design System atualizado em 26/11/2026 e às instruções do projeto. Consolida as decisões posteriores discutidas durante a implementação. O Design System permanece como referência visual, observadas as decisões mais recentes registradas aqui. Não substitui o código-fonte.
 
 **Escopo da verificação:** a estrutura, os imports e a saída estática foram conferidos no repositório durante a refatoração de nomenclatura. As validações visuais anteriores são registros históricos. A revisão visual integrada e os testes de acessibilidade continuam pendentes.
 
@@ -22,10 +22,10 @@ Registro técnico complementar ao Design System atualizado em 25/11/2026 e às i
 | CMS | Fora do MVP |
 | Ambiente local | Windows, Sublime Text |
 | Desenvolvimento | `npm run dev` |
-| Versionamento previsto | Git e GitHub; estratégia pendente |
+| Versionamento | Git e GitHub operacionais; main como referência compartilhada da Fase 2; estratégia de ambientes na Fase 3 |
 | Hospedagem prevista | HostGator Brasil, plano compartilhado; deploy pendente |
 
-Conteúdo definitivo produzido manualmente nos dois idiomas. Integrações GA4, GTM e consentimento não integram o escopo atual. Versões declaradas no package.json durante o ciclo: Astro `^7.4.13`, `@astrojs/mdx` `^8.1.6`, `@astrojs/markdown-satteri` `^0.4.10`, engines Node `>=22.23.4`. Versões efetivamente instaladas e versão do npm não foram auditadas. Comandos de produção: `npm run build` e `npm run preview`.
+Conteúdo definitivo produzido manualmente nos dois idiomas. Integrações GA4, GTM e consentimento não integram o escopo atual. Versões declaradas no package.json durante o ciclo: Astro `^7.4.13`, `@astrojs/mdx` `^8.1.6`, `@astrojs/markdown-satteri` `^0.4.10`, engines Node `>=22.23.4`. Versões instaladas verificadas em 27/11/2026: Astro `7.4.13`, `@astrojs/mdx` `8.1.6` e `@astrojs/markdown-satteri` `0.4.10`; Node `24.15.0` e npm `11.12.1`. Comandos de produção: `npm run build` e `npm run preview`.
 
 ## 3. Estrutura e nomenclatura
 
@@ -166,7 +166,7 @@ A regra de `main` foi introduzida e validada para evitar que o conteúdo ocupass
 | `--font-mono` | Recursive |
 | `--font-weight-regular/medium/semibold/bold/black` | 400/500/600/700/900 |
 
-O fundo usa Olive e textura repetível. Fontes carregadas via Google Fonts no layout: Commissioner 400/500/600/700; Familjen Grotesk 400/500/600/700/900; Recursive MONO@1. Commissioner 900 é necessário para os marcadores de ano e títulos individuais de artigos. O carregamento foi tratado durante a implementação dos artigos; conferir a declaração vigente no BaseLayout (a versão anterior carregava apenas até 700).
+O fundo usa Olive e textura repetível. Fontes carregadas via Google Fonts no layout: Commissioner 400/500/600/700/900; Familjen Grotesk 400/500/600/700/900; Recursive MONO@1. Commissioner 900 é necessário para os marcadores de ano e títulos individuais de artigos. A presença de Commissioner 900 na configuração de Google Fonts em `src/layouts/base.astro` foi confirmada na inspeção de 27/11/2026; não houve teste de carregamento no navegador nesta inspeção.
 
 | Token de tamanho | Expressão |
 |---|---|
@@ -590,9 +590,20 @@ Se necessário, interromper primeiro o servidor em execução. A causa interna n
 
 Home: `ProjectGallery` validado isoladamente com dois projetos. HomeLayout renderizado no navegador, correções de tokens locais e espaço explícito do nome aplicadas. Não houve confirmação de novo teste visual após elas; a revisão visual em desktop, tablet e mobile e os testes de interação continuam pendentes para o refinamento. O build e o preview da refatoração incluem a rota de diagnóstico.
 
+### 8.3. Baseline técnico inicial da Fase 2 — 27/11/2026
+
+- Commit de referência: `75f00c07d3cac71c37c6992865434b765c44a42d` (`getting ready to phase 2`). Branch `main`, working tree limpo, sem diferenças staged ou locais. HEAD e `origin/main` coincidentes; consulta direta com `git ls-remote origin refs/heads/main` confirmou o mesmo hash remoto naquele momento.
+- `npm.cmd run build`: saída 0, output e mode `static`, **18 páginas em 5,97s**, sem erros ou warnings exibidos. Inclui a rota `/home-gallery-test/` e conteúdos demonstrativos; duas thumbnails reutilizaram o cache de otimização.
+- Node `24.15.0`, npm `11.12.1`; dependências instaladas verificadas com `npm.cmd ls --depth=0`, conforme seção 2. `package-lock.json` versionado.
+- A política de execução do PowerShell bloqueou `npm.ps1`. `npm.cmd --version`, `npm.cmd ls --depth=0` e `npm.cmd run build` funcionaram sem alterar a política; `npm.cmd` é a alternativa validada neste ambiente.
+- Sete pacotes locais foram identificados como `extraneous`: `@emnapi/core@1.11.3`, `@emnapi/runtime@1.11.3`, `@emnapi/wasi-threads@1.2.3`, `@img/sharp-wasm32@0.35.5`, `@napi-rs/wasm-runtime@1.2.7`, `@tybys/wasm-util@0.10.5` e `tslib@2.9.1`. Observação técnica não bloqueante para o build; nenhum pacote foi removido. A contagem de oito informada no relatório inicial fica corrigida para sete, conforme o inventário exibido.
+- Não há `.github/workflows` no repositório examinado. O README descreve deploy por push na `main` para staging e tags `v*` para produção como fluxo planejado, com automação ainda não implementada. Integrações externas, webhooks e configurações da hospedagem não foram verificados; ausência de workflows no repositório não comprova ausência de automações externas.
+
+O build gerou artefatos locais em diretórios ignorados pelo Git. Não houve alteração de código, dependências ou configurações, commit, merge, push ou deploy. Preview, testes de navegador, acessibilidade e validação visual não foram executados nesta inspeção. Build bem-sucedido não comprova ausência de regressões ou deploy. Refinamento visual e expansão comercial são requisitos futuros, sujeitos às conciliações das instruções da Fase 2.
+
 ## 9. Conciliação com o Design System
 
-Decisões técnicas preservadas dos ciclos anteriores, a conciliar com o Design System de 25/11/2026:
+Decisões técnicas preservadas dos ciclos anteriores, considerando o Design System atualizado em 26/11/2026:
 
 - Grid responsivo implementado em 3/4/6 colunas e margens/gutters conforme seção 4.
 - Asset de textura integrado no caminho e token da seção 5.
@@ -611,14 +622,14 @@ Decisões anteriores preservadas e alterações do ciclo atual a considerar na p
 - Um asset de projeto compartilhado por card e thumbnail, com adequação de proporções ainda pendente no card.
 - AboutLayout, composições responsivas e estados ativos de seção conforme implementação registrada.
 
-Alterações posteriores a 25/11 que precisam ser refletidas quando o Design System for revisado:
+Alterações posteriores a 25/11 já incorporadas à atualização do Design System de 26/11:
 
 - Categoria removida do ArticlePreview, índice e artigo individual; publicação independente por idioma e agrupamento anual mantidos.
 - ProjectThumbnail é padrão visual, não um componente Astro independente. A implementação é ProjectGallery, específica da Home, com as medidas aprovadas da seção 6.8.
 - Home assimétrica nos três breakpoints; foto à direita; galeria sobreposta apenas no desktop; até 3/2/1 projetos por linha conforme resolução.
 - Tokens tipográficos exclusivos do Hero encapsulados no HomeLayout, com escala nominal mantida e limite de 15vw provisório na implementação.
 
-O Design System de 25/11 não foi modificado nesta entrega, conforme o pedido de atualização apenas da documentação técnica. Em caso de divergência nos pontos acima, prevalecem as decisões posteriores registradas aqui. Os refinamentos visuais não aprovados permanecem pendentes.
+A inspeção inicial da Fase 2 confirmou a atualização de 26/11/2026 no Design System vigente, corrigindo o registro anterior de atualização pendente. Isso não representa nova validação visual. Preservam-se as decisões aprovadas e a precedência das conciliações das instruções da Fase 2; refinamentos futuros continuam pendentes.
 
 ## 10. Próximas etapas
 
@@ -638,7 +649,7 @@ Pendências para o segundo momento:
 
 - Home: revisar escala efetiva do nome, legibilidade, contraste, enquadramento e dimensões da fotografia, espaçamentos do Hero, CTA, sobreposição desktop e transição para tablet/mobile. Validar com zero a três projetos elegíveis e conteúdo nos dois idiomas.
 - Demais páginas: substituir conteúdo e assets provisórios; revisar composição tablet, legibilidade com conteúdo real e espaçamentos; adequar proporções e atributos fixos de ProjectCard à decisão de asset único; avaliar lazy loading do primeiro card; resolver divergência de raio do Button; definir estilos editoriais adicionais quando necessários.
-- Documentação: atualizar Design System conforme seção 9 após decisões visuais pertinentes.
+- Documentação: manter o Design System atualizado após implementação e validação das decisões visuais pertinentes; a atualização de 26/11 já está presente (seção 9).
 - A rota de diagnóstico `/home-gallery-test/` e os conteúdos de teste continuam disponíveis. A eventual retirada faz parte de uma etapa futura.
 - Validação integrada final: revisar links, interações, foco e responsividade nas rotas bilíngues.
 
